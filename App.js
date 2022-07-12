@@ -6,7 +6,7 @@ const App = () => {
   return (
         <View style={styles.container}>
 
-          <TextInput style={styles.textInput}/>
+          <TextInput style={styles.textInput}>  </TextInput>
 
           <View style={styles.buttonWrapper}>
             <Button title='ADD'/>
@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
     top: 32,
     right: 40,
     width: 80,
+  },
+  flatListWrapper:{
+    backgroundColor: '#03A1FC',
+    opacity: 0.5,
   }
 });
 
