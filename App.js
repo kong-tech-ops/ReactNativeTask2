@@ -6,7 +6,7 @@ const App = () => {
   return (
         <View style={styles.container}>
 
-          <TextInput style={styles.textInput}>  </TextInput>
+          <TextInput style={styles.textInput}/>
 
           <View style={styles.buttonWrapper}>
             <Button title='ADD'/>
