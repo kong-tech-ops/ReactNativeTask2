@@ -1,11 +1,25 @@
 import React from 'react';
 
-import {StyleSheet, Text, View,} from 'react-native';
+import {Button, FlatList, StyleSheet, Text, TextInput, View,} from 'react-native';
 
 const App = () => {
   return (
         <View style={styles.container}>
-          <Text>Hello React Native World!</Text>
+
+          <TextInput style={styles.textInput}/>
+
+          <View style={styles.buttonWrapper}>
+            <Button title='ADD'/>
+          </View>
+
+          <View style={styles.flatListWrapper}>
+
+            <FlatList>
+
+            </FlatList>
+            
+          </View>
+         
         </View>
   );
 };
@@ -15,6 +29,22 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent:'center',
     alignItems:'center',
+  },
+  textInput:{
+    position:'absolute',
+    top:30,
+    left:40,
+    justifyContent:'center',
+    width:230,
+    height: 40,
+    backgroundColor: 'lightblue',
+    border: 'none',
+  },
+  buttonWrapper:{
+    position: 'absolute',
+    top: 32,
+    right: 40,
+    width: 80,
   }
 });
 
