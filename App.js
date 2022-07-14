@@ -1,23 +1,43 @@
 import React from 'react';
-
-import {Button, FlatList, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
+import { useState } from 'react';
+import {FlatList, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
 
 const App = () => {
+  
+  const [item, setItem] = useState();
+  const [list, addToList] = useState([]);
+
+  const inputHandler = (enteredText) => {
+    setItem(enteredText)
+  }
+
+  const addItemToList = () =>{
+    addToList(list=>[...list,item])
+  }
+  const renderItem = ({item}) => {
+    return(
+      <TouchableOpacity onPress={CreateAlert}>
+        <Text style={styles.itemStyle} key={item.index}>{item}</Text>
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <View style={styles.container}>
 
-      <TextInput style={styles.textInput}/>
-      {/*rn add button onpress calls the alert, code the functionality of adding stuff to list and put it here instead: */}
-      <TouchableOpacity style={styles.button} onPress={CreateAlert}> 
+      <TextInput style={styles.textInput} onChangeText={inputHandler}/>
+      
+      <TouchableOpacity style={styles.button} onPress={addItemToList}> 
         <Text style={styles.buttonText}>ADD</Text>
       </TouchableOpacity>
 
       <View style={styles.flatListWrapper}>
 
-        <FlatList>
+        <FlatList
+          data={list}
+          renderItem={renderItem}
 
-        </FlatList>
+        />
 
       </View>
          
@@ -38,11 +58,15 @@ const CreateAlert = () => {
         onPress: () => console.log("Archive pressed")
       },
       {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed")
+        text: "Cancel"
       },
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]
+      { text: "OK",
+        onPress: () => console.log("OK pressed")
+      }
+    ],
+    {
+      cancelable:true,
+    }
   );
         
 };
@@ -88,6 +112,17 @@ const styles = StyleSheet.create({
     height: '80%',
     borderRadius:13,
     backgroundColor: '#a1cbed',
+    padding:0,
+    margin:0,
+  },
+  itemStyle:{
+    color: '#000',
+    fontSize: 25,
+    textAlign: 'center',
+    padding:5,
+    margin:10,
+    backgroundColor: '#41a1ee',
+    borderRadius: 13,
   }
 });
 
