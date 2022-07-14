@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ListItem from './components/ListItem';
 import {Button, FlatList, StyleSheet, Text, TextInput, View,} from 'react-native';
 
 const App = () => {
@@ -13,10 +13,6 @@ const App = () => {
           </View>
 
           <View style={styles.flatListWrapper}>
-
-            <FlatList>
-
-            </FlatList>
             
           </View>
          
