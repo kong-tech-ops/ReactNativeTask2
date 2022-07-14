@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Button, FlatList, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
+import ListItem from './components/ListItem';
 
 const App = () => {
 
@@ -20,6 +21,7 @@ const App = () => {
         </FlatList>
 
       </View>
+
          
     </View>
     
