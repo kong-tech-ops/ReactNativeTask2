@@ -1,38 +1,33 @@
 import React from 'react';
 
-import {Button, FlatList, StyleSheet, Text, TextInput, View, Alert} from 'react-native';
+import {Button, FlatList, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
 
 const App = () => {
 
   return (
-        <View style={styles.container}>
+    <View style={styles.container}>
 
-          <TextInput style={styles.textInput}/>
+      <TextInput style={styles.textInput}/>
+      {/*rn add button onpress calls the alert, code the functionality of adding stuff to list and put it here instead: */}
+      <TouchableOpacity style={styles.button} onPress={CreateAlert}> 
+        <Text style={styles.buttonText}>ADD</Text>
+      </TouchableOpacity>
 
-          <View style={styles.buttonWrapper}>
-            <Button title='ADD'/>
-          </View>
+      <View style={styles.flatListWrapper}>
 
-          {/* Temp button to call alert function for now until the longpress of a flatlist functionality is done: */}
-          <View style={styles.tempButtonWrapper}>
-            <Button title='Test the Alert' onPress={CreateAlert}/>
-          </View>
-          {/* Temp button code ends*/}
+        <FlatList>
 
-          
+        </FlatList>
 
-          <View style={styles.flatListWrapper}>
-
-            <FlatList>
-
-            </FlatList>
-
-          </View>
+      </View>
          
-        </View>
+    </View>
+    
   );
 };
 
+
+//code the functionality on the onpress events, rn they only log to console when pressed
 const CreateAlert = () => {
   Alert.alert(
     "Delete?",
@@ -55,30 +50,44 @@ const CreateAlert = () => {
 const styles = StyleSheet.create({
   container:{
     flex:1,
+    width:'100%',
     justifyContent:'center',
     alignItems:'center',
   },
   textInput:{
     position:'absolute',
     top:30,
-    left:40,
+    left:22,
     justifyContent:'center',
-    width:230,
-    height: 40,
-    backgroundColor: 'lightblue',
-    border: 'none',
+    width:'70%',
+    height: 45,
+    backgroundColor: '#a1cbed',
+    borderRadius:13,
   },
-  buttonWrapper:{
+  button:{
     position: 'absolute',
     top: 32,
-    right: 40,
-    width: 80,
+    right: 22,
+    width: '16%',
+    height: 45,
+    backgroundColor:"#41a1ee",
+    borderRadius:13,
   },
-  tempButtonWrapper:{
-    position: 'absolute',
-    top: 90,
-    right: 20,
-    width: 100,
+  buttonText:{
+    textAlign:'center',
+    top:8,
+    fontSize: 20,
+    fontFamily:"sans-serif",
+    fontWeight:'700',
+    color:'#fff'
+  },
+  flatListWrapper:{
+    position:'absolute',
+    top: 100,
+    width: '90%',
+    height: '80%',
+    borderRadius:13,
+    backgroundColor: '#a1cbed',
   }
 });
 
