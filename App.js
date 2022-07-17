@@ -1,24 +1,44 @@
 import React from 'react';
-
-import {Button, FlatList, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
-import ListItem from './components/ListItem';
+import {useState} from 'react';
+import {FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
+import CreateAlert from './Alert';
 
 const App = () => {
+  
+  const [item, setItem] = useState();
+  const [list, addToList] = useState([]);
+
+  const inputHandler = (enteredText) => {
+    setItem(enteredText)
+  }
+
+  const addItemToList = () =>{
+    addToList(list=>[...list,item])
+  }
+  
+  const renderItem = ({item, index}) => {
+    return(
+      <TouchableOpacity onPress={()=>CreateAlert(index, addToList)}>
+        <Text style={styles.itemStyle} key={index}>{item}</Text>
+      </TouchableOpacity>
+    );
+  }
 
   return (
     <View style={styles.container}>
 
-      <TextInput style={styles.textInput}/>
-      {/*rn add button onpress calls the alert, code the functionality of adding stuff to list and put it here instead: */}
-      <TouchableOpacity style={styles.button} onPress={CreateAlert}> 
+      <TextInput style={styles.textInput} onChangeText={inputHandler}/>
+      
+      <TouchableOpacity style={styles.button} onPress={addItemToList}> 
         <Text style={styles.buttonText}>ADD</Text>
       </TouchableOpacity>
 
       <View style={styles.flatListWrapper}>
 
-        <FlatList>
-
-        </FlatList>
+        <FlatList
+          data={list}
+          renderItem={renderItem}
+        />
 
       </View>
 
@@ -26,27 +46,6 @@ const App = () => {
     </View>
     
   );
-};
-
-
-//code the functionality on the onpress events, rn they only log to console when pressed
-const CreateAlert = () => {
-  Alert.alert(
-    "Delete?",
-    "Do you want to delete this item?",
-    [
-      {
-        text: "Archive",
-        onPress: () => console.log("Archive pressed")
-      },
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed")
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]
-  );
-        
 };
 
 const styles = StyleSheet.create({
@@ -90,6 +89,17 @@ const styles = StyleSheet.create({
     height: '80%',
     borderRadius:13,
     backgroundColor: '#a1cbed',
+    padding:0,
+    margin:0,
+  },
+  itemStyle:{
+    color: '#000',
+    fontSize: 25,
+    textAlign: 'center',
+    padding:5,
+    margin:10,
+    backgroundColor: '#41a1ee',
+    borderRadius: 13,
   }
 });
 
