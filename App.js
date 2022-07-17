@@ -18,7 +18,7 @@ const App = () => {
   
   const renderItem = ({item, index}) => {
     return(
-      <TouchableOpacity onPress={()=>CreateAlert(index, addToList)}>
+      <TouchableOpacity onLongPress={()=>CreateAlert(index, addToList)}>
         <Text style={styles.itemStyle} key={index}>{item}</Text>
       </TouchableOpacity>
     );
