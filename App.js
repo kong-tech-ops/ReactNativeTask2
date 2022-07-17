@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, setState } from 'react';
 import {FlatList, StyleSheet, Text, TextInput, View, Alert, TouchableOpacity} from 'react-native';
 
 const App = () => {
@@ -14,13 +14,48 @@ const App = () => {
   const addItemToList = () =>{
     addToList(list=>[...list,item])
   }
-  const renderItem = ({item}) => {
+  const removeItem = (index) =>{
+    addToList(list=>list.filter((item, id)=>id!=index));
+   
+  }
+  
+  const renderItem = ({item, index}) => {
     return(
       <TouchableOpacity onPress={CreateAlert}>
-        <Text style={styles.itemStyle} key={item.index}>{item}</Text>
+        <Text style={styles.itemStyle} key={index}>{item}</Text>
       </TouchableOpacity>
     );
   }
+
+ 
+  const CreateAlert = () => {
+
+    Alert.alert(
+      "Delete?",
+      "Do you want to delete this item?",
+      [
+        {
+          text: "Archive",
+          onPress: () => console.log("Archive pressed")
+        },
+        {
+          text: "Cancel"
+        },
+        { text: "OK",
+          onPress: () => {
+            console.log({item})
+            removeItem(index)
+          }
+          
+          
+        }
+      ],
+      {
+        cancelable:true,
+      }
+    );
+          
+  };
 
   return (
     <View style={styles.container}>
@@ -47,29 +82,9 @@ const App = () => {
 };
 
 
+
 //code the functionality on the onpress events, rn they only log to console when pressed
-const CreateAlert = () => {
-  Alert.alert(
-    "Delete?",
-    "Do you want to delete this item?",
-    [
-      {
-        text: "Archive",
-        onPress: () => console.log("Archive pressed")
-      },
-      {
-        text: "Cancel"
-      },
-      { text: "OK",
-        onPress: () => console.log("OK pressed")
-      }
-    ],
-    {
-      cancelable:true,
-    }
-  );
-        
-};
+
 
 const styles = StyleSheet.create({
   container:{
