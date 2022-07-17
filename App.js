@@ -41,6 +41,7 @@ const App = () => {
         />
 
       </View>
+
          
     </View>
     
