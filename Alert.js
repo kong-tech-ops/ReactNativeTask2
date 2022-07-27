@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 
-const CreateAlert = (index, addToList) => {
+const CreateAlert = (index, item, addToList) => {
 
     const removeItem = (index) =>{
       addToList(list=>list.filter((item, id)=>id!=index));
@@ -12,7 +12,7 @@ const CreateAlert = (index, addToList) => {
       [
         {
           text: "Archive",
-          onPress: () => console.log("Archive pressed")
+          onPress: () => console.log(item)
         },
         {
           text: "Cancel"

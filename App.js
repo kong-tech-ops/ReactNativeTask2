@@ -3,9 +3,6 @@ import {useState} from 'react';
 import {FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import CreateAlert from './Alert';
 
-init();
-addItemToDatabase('TestItem');
-selectAllItems();
 
 const App = () => {
   
@@ -17,12 +14,12 @@ const App = () => {
   }
 
   const addItemToList = () =>{
-    addToList(list=>[...list,item])
+    addToList(list=>[...list, item])
   }
   
   const renderItem = ({item, index}) => {
     return(
-      <TouchableOpacity onLongPress={()=>CreateAlert(index, addToList)}>
+      <TouchableOpacity onLongPress={()=>CreateAlert(index, item, addToList)}>
         <Text style={styles.itemStyle} key={index}>{item}</Text>
       </TouchableOpacity>
     );
@@ -43,36 +40,11 @@ const App = () => {
           data={list}
           renderItem={renderItem}
         />
-
-      </View>
-
-         
+      </View> 
     </View>
   );
 };
 
-
-//code the functionality on the onpress events, rn they only log to console when pressed
-const CreateAlert = () => {
-  Alert.alert(
-    "Delete?",
-    "Do you want to delete this item?",
-    [
-      {
-        text: "Archive",
-        onPress: () =>
-          console.log('Archive pressed')
-         
-      },
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed")
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ]
-  );
-        
-};
 
 const styles = StyleSheet.create({
   container:{
