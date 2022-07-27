@@ -3,6 +3,10 @@ import {useState} from 'react';
 import {FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import CreateAlert from './Alert';
 
+init();
+addItemToDatabase('TestItem');
+selectAllItems();
+
 const App = () => {
   
   const [item, setItem] = useState();
@@ -44,8 +48,30 @@ const App = () => {
 
          
     </View>
-    
   );
+};
+
+
+//code the functionality on the onpress events, rn they only log to console when pressed
+const CreateAlert = () => {
+  Alert.alert(
+    "Delete?",
+    "Do you want to delete this item?",
+    [
+      {
+        text: "Archive",
+        onPress: () =>
+          console.log('Archive pressed')
+         
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed")
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ]
+  );
+        
 };
 
 const styles = StyleSheet.create({
