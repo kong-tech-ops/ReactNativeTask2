@@ -2,10 +2,12 @@ import React from 'react';
 import {useState} from 'react';
 import {FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import CreateAlert from './Alert';
+import { init, addItemToDatabase } from './db';
 
+init();
 
 const App = () => {
-  
+
   const [item, setItem] = useState();
   const [list, addToList] = useState([]);
 
@@ -13,8 +15,9 @@ const App = () => {
     setItem(enteredText)
   }
 
-  const addItemToList = () =>{
-    addToList(list=>[...list, item])
+  const addItemToList = () => {
+    addItemToDatabase(item, 0);
+    addToList(list=>[...list, item]);
   }
   
   const renderItem = ({item, index}) => {
