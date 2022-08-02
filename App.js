@@ -2,27 +2,40 @@ import React from 'react';
 import {useState} from 'react';
 import {FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import CreateAlert from './Alert';
+import { init, addItemToDatabase } from './db';
+
+init();
 
 const App = () => {
-  
+
   const [item, setItem] = useState();
   const [list, addToList] = useState([]);
 
+  const setID = () => {
+    let anID = parseInt(Date.now()*Math.random());
+    return anID;
+  }
+  
   const inputHandler = (enteredText) => {
     setItem(enteredText)
   }
 
-  const addItemToList = () =>{
-    addToList(list=>[...list,item])
+  const addItemToList = () => {
+    id=setID();
+    addItemToDatabase(id, item, 0);
+    addToList(list=>[...list, item]);
   }
   
-  const renderItem = ({item, index}) => {
+  const renderItem = ({item}) => {
     return(
-      <TouchableOpacity onLongPress={()=>CreateAlert(index, addToList)}>
-        <Text style={styles.itemStyle} key={index}>{item}</Text>
+      <TouchableOpacity onLongPress={()=>CreateAlert(item, addToList)}>
+        <Text style={styles.itemStyle} key={item.index}>{item}</Text>
       </TouchableOpacity>
     );
   }
+
+
+  
 
   return (
     <View style={styles.container}>
@@ -33,20 +46,19 @@ const App = () => {
         <Text style={styles.buttonText}>ADD</Text>
       </TouchableOpacity>
 
+     
+
       <View style={styles.flatListWrapper}>
 
         <FlatList
           data={list}
           renderItem={renderItem}
         />
-
-      </View>
-
-         
+      </View> 
     </View>
-    
   );
 };
+
 
 const styles = StyleSheet.create({
   container:{

@@ -1,6 +1,7 @@
 import {Alert} from 'react-native';
+import { archiveItemToDatabase, deleteItemFromDatabase, fetchAllItems} from './db';
 
-const CreateAlert = (index, addToList) => {
+const CreateAlert = (anID, index, item, addToList) => {
 
     const removeItem = (index) =>{
       addToList(list=>list.filter((item, id)=>id!=index));
@@ -12,14 +13,23 @@ const CreateAlert = (index, addToList) => {
       [
         {
           text: "Archive",
-          onPress: () => console.log("Archive pressed")
+          onPress: () => {
+            archiveItemToDatabase(anID, item, 1);
+            removeItem(index);
+          }
         },
         {
-          text: "Cancel"
+          text: "Cancel",
+          onPress: () => {
+            fetchAllItems();
+          }
         },
         { 
           text: "OK",
-          onPress: () => removeItem(index)
+          onPress: () => {
+            deleteItemFromDatabase(anID, item);
+            removeItem(index);
+          }
         }
       ],
       {
