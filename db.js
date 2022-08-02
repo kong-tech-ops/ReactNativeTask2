@@ -5,25 +5,25 @@ var tableName = "items";
 
 export const init = () => {
         db.transaction((tx) => {
-            // tx.executeSql('DROP TABLE IF EXISTS ITEMS', []);
+            //tx.executeSql('DROP TABLE IF EXISTS ITEMS', []);
             tx.executeSql(`CREATE TABLE IF NOT EXISTS ${tableName} (ID INTEGER NOT NULL PRIMARY KEY, ITEM TEXT NOT NULL, ARCHIVED INTEGER NOT NULL);`, []);
             console.log('Database initialized.');
         }
     );
 };
 
-export const addItemToDatabase = (item, isArchived) => {
-    db.executeSql(`INSERT INTO ${tableName} (ITEM, ARCHIVED) VALUES(?,?)`, [item, isArchived]);
-    console.log(`${item} has been added to the database. isArchived: ${isArchived}`);
+export const addItemToDatabase = (anID, item, isArchived) => {
+    db.executeSql(`INSERT INTO ${tableName} (ITEM, ARCHIVED) VALUES(?,?,?)`, [anID, item, isArchived]);
+    console.log(`${item} with ID ${anID} has been added to the database. isArchived: ${isArchived}`);
 }
 
 export const archiveItemToDatabase = (item, isArchived) => {
     db.executeSql(`UPDATE ${tableName} SET ARCHIVED=? WHERE ITEM=?;`, [isArchived, item]);
 }
 
-export const deleteItemFromDatabase = (index, item) => {
-    db.executeSql(`DELETE FROM ${tableName} WHERE ID=? AND ITEM=?`, [index, item]);
-    console.log(`Item name: ${item} with the ID: ${index} was deleted from the database.`);
+export const deleteItemFromDatabase = (anID, item) => {
+    db.executeSql(`DELETE FROM ${tableName} WHERE ID=? AND ITEM=?`, [anID, item]);
+    console.log(`Item name: ${item} with the ID: ${anID} was deleted from the database.`);
 }
 
 export const fetchAllItems = () => {

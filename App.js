@@ -11,22 +11,31 @@ const App = () => {
   const [item, setItem] = useState();
   const [list, addToList] = useState([]);
 
+  const setID = () => {
+    let anID = parseInt(Date.now()*Math.random());
+    return anID;
+  }
+  
   const inputHandler = (enteredText) => {
     setItem(enteredText)
   }
 
   const addItemToList = () => {
-    addItemToDatabase(item, 0);
+    id=setID();
+    addItemToDatabase(id, item, 0);
     addToList(list=>[...list, item]);
   }
   
-  const renderItem = ({item, index}) => {
+  const renderItem = ({item}) => {
     return(
-      <TouchableOpacity onLongPress={()=>CreateAlert(index, item, addToList)}>
-        <Text style={styles.itemStyle} key={index}>{item}</Text>
+      <TouchableOpacity onLongPress={()=>CreateAlert(item, addToList)}>
+        <Text style={styles.itemStyle} key={item.index}>{item}</Text>
       </TouchableOpacity>
     );
   }
+
+
+  
 
   return (
     <View style={styles.container}>
@@ -36,6 +45,8 @@ const App = () => {
       <TouchableOpacity style={styles.button} onPress={addItemToList}> 
         <Text style={styles.buttonText}>ADD</Text>
       </TouchableOpacity>
+
+     
 
       <View style={styles.flatListWrapper}>
 
