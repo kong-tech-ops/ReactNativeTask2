@@ -17,12 +17,13 @@ export const addItemToDatabase = (anID, item, isArchived) => {
     console.log(`${item} with ID ${anID} has been added to the database. isArchived: ${isArchived}`);
 }
 
-export const archiveItemToDatabase = (item, isArchived) => {
-    db.executeSql(`UPDATE ${tableName} SET ARCHIVED=? WHERE ITEM=?;`, [isArchived, item]);
+export const archiveItemToDatabase = (anID, item, isArchived) => {
+    db.executeSql(`UPDATE ${tableName} SET ARCHIVED=? WHERE ID=?;`, [item, anID, isArchived]);
+    console.log(`Item name: ${item} with the ID: ${anID} was archived in the database. isArchived: ${isArchived}`);
 }
 
 export const deleteItemFromDatabase = (anID, item) => {
-    db.executeSql(`DELETE FROM ${tableName} WHERE ID=? AND ITEM=?`, [anID, item]);
+    db.executeSql(`DELETE FROM ${tableName} ITEM=? AND WHERE ID=? `, [item, anID]);
     console.log(`Item name: ${item} with the ID: ${anID} was deleted from the database.`);
 }
 
