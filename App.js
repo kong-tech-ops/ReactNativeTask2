@@ -26,16 +26,13 @@ const App = () => {
     addToList(list=>[...list, item]);
   }
   
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     return(
-      <TouchableOpacity onLongPress={()=>CreateAlert(id, item, addToList)}>
-        <Text style={styles.itemStyle} key={id}>{item}</Text>
+      <TouchableOpacity onLongPress={()=>CreateAlert(id, item, addToList, index)}>
+        <Text style={styles.itemStyle} key={index}>{item}</Text>
       </TouchableOpacity>
     );
   }
-
-
-  
 
   return (
     <View style={styles.container}>
