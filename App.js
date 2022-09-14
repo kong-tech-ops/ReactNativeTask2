@@ -2,33 +2,39 @@ import React from 'react';
 import {useState} from 'react';
 import {FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity} from 'react-native';
 import CreateAlert from './Alert';
-import { init, addItemToDatabase } from './db';
+import { init, addItemToDatabase, fetchAllItems } from './db';
+import Item from './Item.js';
 
-init();
+const its = new Item('s', 2, 'yes');
+console.table(its);
+
+init().then((val) => {
+  console.log('Database initialized.');
+}).catch(() => console.log('An error occurred when initializing the database.'));
+
+// uncomment line 9 and restart the app to see the database items in the console window
+fetchAllItems();
+
+console.log('Print example');
 
 const App = () => {
 
   const [item, setItem] = useState();
   const [list, addToList] = useState([]);
-
-  const setID = () => {
-    let anID = parseInt(Date.now()*Math.random());
-    return anID;
-  }
   
   const inputHandler = (enteredText) => {
-    setItem(enteredText)
+    setItem(enteredText);
   }
 
   const addItemToList = () => {
-    id=setID();
-    addItemToDatabase(id, item, 0);
+    addItemToDatabase(item, 0);
     addToList(list=>[...list, item]);
   }
   
+
   const renderItem = ({item, index}) => {
     return(
-      <TouchableOpacity onLongPress={()=>CreateAlert(id, item, addToList, index)}>
+      <TouchableOpacity onLongPress={()=>CreateAlert(item, addToList, index)}>
         <Text style={styles.itemStyle} key={index}>{item}</Text>
       </TouchableOpacity>
     );
@@ -42,9 +48,6 @@ const App = () => {
       <TouchableOpacity style={styles.button} onPress={addItemToList}> 
         <Text style={styles.buttonText}>ADD</Text>
       </TouchableOpacity>
-
-     
-
       <View style={styles.flatListWrapper}>
 
         <FlatList
