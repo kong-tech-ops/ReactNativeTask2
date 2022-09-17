@@ -1,42 +1,42 @@
-import {Alert} from 'react-native';
-import { archiveItemToDatabase, deleteItemFromDatabase, fetchAllItems} from './db';
+import { Alert } from 'react-native';
+import { archiveItemToDatabase, deleteItemFromDatabase, fetchAllItems } from './db';
 
-const CreateAlert = (id, item, addToList, index) => {
+const CreateAlert = (id, item, addToList) => {
 
-    const removeItem = (index) => {
-      addToList(list=>list.filter((item, id) => id !=index))
-    }
+  const removeItem = () => {
+    addToList(list => list.filter((id) => id != id));
+  }
 
-    Alert.alert(
-      "Delete?",
-      "Do you want to delete this item?",
-      [
-        {
-          text: "Archive",
-          onPress: () => {
-            archiveItemToDatabase(item, 1);
-            removeItem(index);
-          }
-        },
-        {
-          text: "Cancel",
-          onPress: () => {
-            fetchAllItems();
-          }
-        },
-        { 
-          text: "OK",
-          onPress: () => {
-            deleteItemFromDatabase(id, item);
-            removeItem(index);
-          }
-        }
-      ],
+  Alert.alert(
+    "Delete?",
+    "Do you want to delete this item?",
+    [
       {
-        cancelable:true,
+        text: "Archive",
+        onPress: () => {
+          archiveItemToDatabase(id);
+          removeItem(id);
+        }
+      },
+      {
+        text: "Cancel",
+        onPress: () => {
+          fetchAllItems();
+        }
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          deleteItemFromDatabase(id);
+          removeItem(id);
+        }
       }
-    );
-          
+    ],
+    {
+      cancelable: true,
+    }
+  );
+
 };
 
 export default CreateAlert;
