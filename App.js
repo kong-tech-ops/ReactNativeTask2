@@ -2,23 +2,22 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import CreateAlert from './Alert';
-import { init, addItemToDatabase, fetchAllItems } from './db';
+import { init, addItemToDatabase, fetchAllItems, deleteItemFromDatabase } from './db';
 
 // uncomment line 9 and restart the app to see the database items in the console window
 init().catch(() => console.log('An error occurred when initializing the database.'));
 const App = () => {
 
-  const [item, setItem] = useState();
+  const [item, setItem] = useState('');
   const [list, addToList] = useState();
 
   // fetches data once when the app launches
   useEffect(() => {
     fetchAllItems().then((val) => {
       let data = val.map((e) => JSON.stringify(e));
-      addToList(() => [data.map((e) => JSON.parse(e))]);
+      addToList(() => [...data.map((e) => JSON.parse(e))]);
     }).catch((e) => console.log(e));
   }, [])
-  console.table(list);
 
   const inputHandler = (enteredText) => {
     setItem(enteredText);
@@ -26,16 +25,19 @@ const App = () => {
 
   const addItemToList = () => {
     addItemToDatabase(item);
-    addToList(list => [...list, item]);
+    
   }
 
-  const renderItems = ({ item: list }) => 
-      list.map(({ id, title }) => {
-        return <TouchableOpacity onLongPress={() => CreateAlert(id, title, addToList)} key={id}>
-          <Text style={styles.itemStyle}>{title}</Text>
-        </TouchableOpacity>
-      });
-    
+  const renderItems = ({ item }) => {
+    // example of destructuring, seperating item-object's attributes to variables
+    let { id, title } = item;
+    return <TouchableOpacity onLongPress={() => CreateAlert(id, list, addToList)} key={id}>
+      <Text style={styles.itemStyle}>{ title }</Text>
+    </TouchableOpacity>
+  }
+
+
+
   return (
     <View style={styles.container}>
 
