@@ -8,7 +8,7 @@ export const init = () => {
   promise = new Promise((res, rej) => {
     try {
       db.transaction(tx => {
-        //tx.executeSql(`DROP TABLE IF EXISTS ${tableName}`, []);
+        // tx.executeSql(`DROP TABLE IF EXISTS ${tableName}`, []);
         tx.executeSql(
           `CREATE TABLE IF NOT EXISTS ${tableName} (ID INTEGER NOT NULL PRIMARY KEY, ITEM TEXT NOT NULL, ARCHIVED INTEGER NOT NULL);`,
           [],

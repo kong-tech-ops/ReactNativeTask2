@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import CreateAlert from './Alert';
 import { init, addItemToDatabase, fetchAllItems, deleteItemFromDatabase } from './db';
+import Item from './Item';
 
 // uncomment line 9 and restart the app to see the database items in the console window
 init().catch(() => console.log('An error occurred when initializing the database.'));
@@ -11,43 +12,47 @@ const App = () => {
   const [item, setItem] = useState('');
   const [list, addToList] = useState();
 
+
   // fetches data once when the app launches
   useEffect(() => {
     fetchAllItems().then((val) => {
       let data = val.map((e) => JSON.stringify(e));
       addToList(() => [...data.map((e) => JSON.parse(e))]);
     }).catch((e) => console.log(e));
-  }, [])
+  }, []);
 
+  console.table(list);
   const inputHandler = (enteredText) => {
     setItem(enteredText);
   }
 
   const addItemToList = () => {
     addItemToDatabase(item);
-    
+    if (list.length !== 0) {
+      let lastItemId = list[list.length - 1].id + 1;
+      addToList(list => [...list, new Item(lastItemId, item, 0)]);
+      return;
+    }
+    addToList(list => [...list, new Item(0, item, 0)]);
   }
 
   const renderItems = ({ item }) => {
-    // example of destructuring, seperating item-object's attributes to variables
-    let { id, title } = item;
-    return <TouchableOpacity onLongPress={() => CreateAlert(id, list, addToList)} key={id}>
-      <Text style={styles.itemStyle}>{ title }</Text>
-    </TouchableOpacity>
+    let { id, title, isArchived } = item;
+    if (isArchived == 0) {
+      return <TouchableOpacity onLongPress={() => CreateAlert(id, list, addToList)} key={id}>
+          <Text style={styles.itemStyle}>{title}</Text>
+        </TouchableOpacity>
+    }
   }
-
 
 
   return (
     <View style={styles.container}>
-
       <TextInput style={styles.textInput} onChangeText={inputHandler} />
-
       <TouchableOpacity style={styles.button} onPress={addItemToList}>
         <Text style={styles.buttonText}>ADD</Text>
       </TouchableOpacity>
       <View style={styles.flatListWrapper}>
-
         <FlatList
           data={list}
           renderItem={renderItems}
